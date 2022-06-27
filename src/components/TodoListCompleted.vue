@@ -1,14 +1,18 @@
 <template>
+
   <div class="contenedor-lista">
-  <div v-for="todo in todoList" :key="todo.id" v-bind:id="todo.id">
-    <div class="row-container" @mouseenter="cambiarVisibilidad(true, todo.id)" @mouseleave="cambiarVisibilidad(false, todo.id)">
-      <span :class="{ completed: todo.completed }">{{ todo.item }}</span>
-      <div class="botones" v-if="mostrarBotones(todo.id)">
-        <span @click.stop="toggleCompleted(todo.id)" >✅</span>
-        <span @click="deleteTodo(todo.id)" class="x">❌</span>
+    <button @click="onClick()">Completadas</button>
+      <div v-if="mostrarListado" class="listado">
+        <div v-for="todo in todoList" :key="todo.id" v-bind:id="todo.id">
+          <div v-if="todo.completed" class="row-container" @mouseenter="cambiarVisibilidad(true, todo.id)" @mouseleave="cambiarVisibilidad(false, todo.id)">
+            <span :class="{ completed: todo.completed }">{{ todo.item }}</span>
+            <div class="botones" v-if="mostrarBotones(todo.id)">
+              <span @click.stop="toggleCompleted(todo.id)" >⏫</span>
+              <span @click="deleteTodo(todo.id)" class="x">❌</span>
+              </div>
+          </div>
         </div>
-    </div>
-  </div>
+      </div>
   </div>
 </template>
 
@@ -19,6 +23,7 @@ export default {
 
   data(){
     return{
+      mostrarListado: false,
         mostrarBoton : {
             id: 1,
             mostrar: false
@@ -32,6 +37,9 @@ export default {
     },
     mostrarBotones(id){
         return this.mostrarBoton.id == id && this.mostrarBoton.mostrar;
+    },
+    onClick(){
+      this.mostrarListado = !this.mostrarListado;
     }
   },
 
@@ -47,7 +55,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .completed {
   text-decoration: line-through;
 }
@@ -64,6 +72,7 @@ export default {
   margin: 0 auto;
   font-size: 20px;
   padding: 20px 0;
+  color: red;
 }
 .botones{
   font-size: 26px;
