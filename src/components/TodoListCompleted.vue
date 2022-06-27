@@ -27,6 +27,7 @@ export default {
         mostrarBoton : {
             id: 1,
             mostrar: false
+            
         }
     }
   },
